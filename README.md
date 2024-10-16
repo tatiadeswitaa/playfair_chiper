@@ -6,6 +6,7 @@ Nim : 312210478
 
 Kelas : Ti.22.a5
 
+'''
 # Membuat tabel 5x5 Playfair Cipher
 def create_table(key):
     alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
@@ -79,8 +80,9 @@ for plaintext in plaintexts:
     print(f"Plaintext: {plaintext}")
     print(f"Ciphertext: {ciphertext}")
     print()
+'''
 
-# Hasil running
+# Hasil output
 
 ![Screenshot (61)](https://github.com/user-attachments/assets/a6387986-c23d-48e5-879a-fa84b870f85f)
 
