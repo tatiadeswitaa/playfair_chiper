@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/a5a308c3-7d57-4417-9ca7-1071c2fcd6d7)# playfair_chiper
+# playfair_chiper
 
 Nama : Tatia Deswita Anggraeni
 Nim : 312210478
