@@ -6,8 +6,10 @@ Nim : 312210478
 
 Kelas : Ti.22.a5
 
+
 '''
-# Membuat tabel 5x5 Playfair Cipher
+
+### Membuat tabel 5x5 Playfair Cipher
 def create_table(key):
     alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
     key = "".join(dict.fromkeys(key.upper().replace("J", "I")))  # Hilangkan duplikat, ganti J dengan I
@@ -17,7 +19,7 @@ def create_table(key):
             table.append(c)
     return [table[i:i + 5] for i in range(0, 25, 5)]
 
-# Mendapatkan posisi dari huruf di tabel
+### Mendapatkan posisi dari huruf di tabel
 def get_position(table, char):
     for row in range(5):
         for col in range(5):
@@ -25,7 +27,7 @@ def get_position(table, char):
                 return row, col
     return None
 
-# Memproses plaintext menjadi digram
+### Memproses plaintext menjadi digram
 def prepare_text(text):
     text = text.upper().replace("J", "I").replace(" ", "")
     prepared_text = []
@@ -41,7 +43,7 @@ def prepare_text(text):
         prepared_text[-1] += 'X'
     return prepared_text
 
-# Enkripsi menggunakan aturan Playfair Cipher
+### Enkripsi menggunakan aturan Playfair Cipher
 def encrypt_playfair(plaintext, table):
     digrams = prepare_text(plaintext)
     ciphertext = ""
@@ -60,7 +62,7 @@ def encrypt_playfair(plaintext, table):
     
     return ciphertext
 
-# Kunci dan teks yang akan dienkripsi
+### Kunci dan teks yang akan dienkripsi
 key = "TEKNIK INFORMATIKA"
 plaintexts = [
     "GOOD BROOM SWEEP CLEAN",
@@ -68,13 +70,13 @@ plaintexts = [
     "JUNK FOOD AND HEALTH PROBLEMS"
 ]
 
-# Membuat tabel Playfair Cipher
+### Membuat tabel Playfair Cipher
 table = create_table(key)
 print("Tabel Playfair Cipher:")
 for row in table:
     print(row)
 
-# Enkripsi setiap teks
+### Enkripsi setiap teks
 for plaintext in plaintexts:
     ciphertext = encrypt_playfair(plaintext, table)
     print(f"Plaintext: {plaintext}")
