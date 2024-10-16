@@ -6,7 +6,8 @@ Nim : 312210478
 
 Kelas : Ti.22.a5
 
-'''
+```
+
 import numpy as np
 
 # Generate the Playfair matrix
