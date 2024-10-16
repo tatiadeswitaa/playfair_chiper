@@ -5,15 +5,14 @@ Nim : 312210478
 Kelas : Ti.22.a5
 
 
-
-def create_matrix(key):
+# def create_matrix(key):
     key = ''.join(sorted(set(key), key=key.index))  # remove duplicates
     key = key.replace('J', 'I')  # replace J with I
     alphabet = 'ABCDEFGHIKLMNOPQRSTUVWXYZ'
     matrix = key + ''.join(filter(lambda x: x not in key, alphabet))
     return [matrix[i:i + 5] for i in range(0, 25, 5)]
 
-def prepare_text(text):
+# def prepare_text(text):
     text = text.replace(' ', '').upper().replace('J', 'I')
     prepared = []
     i = 0
@@ -28,7 +27,7 @@ def prepare_text(text):
             i += 2
     return prepared
 
-def encrypt(plaintext, key):
+# def encrypt(plaintext, key):
     matrix = create_matrix(key)
     pairs = prepare_text(plaintext)
     ciphertext = ''
@@ -46,7 +45,7 @@ def encrypt(plaintext, key):
             ciphertext += matrix[row_b][col_a]
     return ciphertext
 
-def decrypt(ciphertext, key):
+# def decrypt(ciphertext, key):
     matrix = create_matrix(key)
     pairs = prepare_text(ciphertext)
     plaintext = ''
