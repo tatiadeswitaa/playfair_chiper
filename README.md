@@ -1,69 +1,63 @@
-# playfair_chiper
+![image](https://github.com/user-attachments/assets/a5a308c3-7d57-4417-9ca7-1071c2fcd6d7)# playfair_chiper
 
 Nama : Tatia Deswita Anggraeni
 Nim : 312210478
 Kelas : Ti.22.a5
 
+# Membuat tabel 5x5 Playfair Cipher
+def create_table(key):
+    alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+    key = "".join(dict.fromkeys(key.upper().replace("J", "I")))  # Hilangkan duplikat, ganti J dengan I
+    table = [c for c in key if c in alphabet]
+    for c in alphabet:
+        if c not in table:
+            table.append(c)
+    return [table[i:i + 5] for i in range(0, 25, 5)]
 
-# def create_matrix(key):
-    key = ''.join(sorted(set(key), key=key.index))  # remove duplicates
-    key = key.replace('J', 'I')  # replace J with I
-    alphabet = 'ABCDEFGHIKLMNOPQRSTUVWXYZ'
-    matrix = key + ''.join(filter(lambda x: x not in key, alphabet))
-    return [matrix[i:i + 5] for i in range(0, 25, 5)]
+# Mendapatkan posisi dari huruf di tabel
+def get_position(table, char):
+    for row in range(5):
+        for col in range(5):
+            if table[row][col] == char:
+                return row, col
+    return None
 
-# def prepare_text(text):
-    text = text.replace(' ', '').upper().replace('J', 'I')
-    prepared = []
+# Memproses plaintext menjadi digram
+def prepare_text(text):
+    text = text.upper().replace("J", "I").replace(" ", "")
+    prepared_text = []
     i = 0
     while i < len(text):
-        a = text[i]
-        b = text[i + 1] if i + 1 < len(text) else 'X'
-        if a == b:
-            prepared.append(a + 'X')
+        if i + 1 < len(text) and text[i] == text[i + 1]:
+            prepared_text.append(text[i] + 'X')
             i += 1
         else:
-            prepared.append(a + b)
+            prepared_text.append(text[i:i + 2])
             i += 2
-    return prepared
+    if len(prepared_text[-1]) == 1:
+        prepared_text[-1] += 'X'
+    return prepared_text
 
-# def encrypt(plaintext, key):
-    matrix = create_matrix(key)
-    pairs = prepare_text(plaintext)
-    ciphertext = ''
-    for a, b in pairs:
-        row_a, col_a = divmod(matrix.index(a), 5)
-        row_b, col_b = divmod(matrix.index(b), 5)
-        if row_a == row_b:
-            ciphertext += matrix[row_a][(col_a + 1) % 5]
-            ciphertext += matrix[row_b][(col_b + 1) % 5]
-        elif col_a == col_b:
-            ciphertext += matrix[(row_a + 1) % 5][col_a]
-            ciphertext += matrix[(row_b + 1) % 5][col_b]
+# Enkripsi menggunakan aturan Playfair Cipher
+def encrypt_playfair(plaintext, table):
+    digrams = prepare_text(plaintext)
+    ciphertext = ""
+    
+    for digram in digrams:
+        row1, col1 = get_position(table, digram[0])
+        row2, col2 = get_position(table, digram[1])
+        
+        # Aturan enkripsi Playfair Cipher
+        if row1 == row2:
+            ciphertext += table[row1][(col1 + 1) % 5] + table[row2][(col2 + 1) % 5]
+        elif col1 == col2:
+            ciphertext += table[(row1 + 1) % 5][col1] + table[(row2 + 1) % 5][col2]
         else:
-            ciphertext += matrix[row_a][col_b]
-            ciphertext += matrix[row_b][col_a]
+            ciphertext += table[row1][col2] + table[row2][col1]
+    
     return ciphertext
 
-# def decrypt(ciphertext, key):
-    matrix = create_matrix(key)
-    pairs = prepare_text(ciphertext)
-    plaintext = ''
-    for a, b in pairs:
-        row_a, col_a = divmod(matrix.index(a), 5)
-        row_b, col_b = divmod(matrix.index(b), 5)
-        if row_a == row_b:
-            plaintext += matrix[row_a][(col_a - 1) % 5]
-            plaintext += matrix[row_b][(col_b - 1) % 5]
-        elif col_a == col_b:
-            plaintext += matrix[(row_a - 1) % 5][col_a]
-            plaintext += matrix[(row_b - 1) % 5][col_b]
-        else:
-            plaintext += matrix[row_a][col_b]
-            plaintext += matrix[row_b][col_a]
-    return plaintext
-
-# Contoh penggunaan
+# Kunci dan teks yang akan dienkripsi
 key = "TEKNIK INFORMATIKA"
 plaintexts = [
     "GOOD BROOM SWEEP CLEAN",
@@ -71,19 +65,20 @@ plaintexts = [
     "JUNK FOOD AND HEALTH PROBLEMS"
 ]
 
-for text in plaintexts:
-    encrypted = encrypt(text, key)
-    decrypted = decrypt(encrypted, key)
-    print(f"Plaintext: {text}")
-    print(f"Ciphertext: {encrypted}")
-    print(f"Decrypted: {decrypted}")
+# Membuat tabel Playfair Cipher
+table = create_table(key)
+print("Tabel Playfair Cipher:")
+for row in table:
+    print(row)
+
+# Enkripsi setiap teks
+for plaintext in plaintexts:
+    ciphertext = encrypt_playfair(plaintext, table)
+    print(f"Plaintext: {plaintext}")
+    print(f"Ciphertext: {ciphertext}")
     print()
 
-    Hasil running
+# Hasil running
 
-![Screenshot (55)](https://github.com/user-attachments/assets/ab111c2b-7f52-4aa2-9f2a-f00eb43110ab)
-![Screenshot (56)](https://github.com/user-attachments/assets/b564f790-ac2f-41c7-9a7d-1ce9ab81e0f6)
-![Screenshot (57)](https://github.com/user-attachments/assets/90214dd7-501a-4e29-9a93-4f0a59a59fbc)
-![Screenshot (58)](https://github.com/user-attachments/assets/4d8a379d-3f9d-4918-9588-7b5f84d53eb0)
-![Screenshot (59)](https://github.com/user-attachments/assets/22c333b7-85d4-4442-bc01-4cbe1345ef1d)
-![Screenshot (60)](https://github.com/user-attachments/assets/c5fb6a62-4750-4e30-bb72-ab8e420ebac3)
+![Screenshot (61)](https://github.com/user-attachments/assets/a6387986-c23d-48e5-879a-fa84b870f85f)
+
